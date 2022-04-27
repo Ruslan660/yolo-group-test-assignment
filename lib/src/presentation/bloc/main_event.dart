@@ -25,10 +25,10 @@ class LoadingDataOnMainPageEvent extends MainPageEvent {
 }
 
 class DataLoadedOnMainPageEvent extends MainPageEvent {
-  final List<Character>? characters;
+  final CharactersResponseModel? response;
 
-  const DataLoadedOnMainPageEvent(this.characters);
+  const DataLoadedOnMainPageEvent(this.response);
 
   @override
-  List<Object?> get props => [characters];
+  List<Object?> get props => [response];
 }

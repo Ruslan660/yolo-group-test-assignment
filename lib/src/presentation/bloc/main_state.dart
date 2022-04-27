@@ -19,7 +19,7 @@ class UnSuccessfulMainPageState extends MainPageState {
 }
 
 class SuccessfulMainPageState extends MainPageState {
-  final List<Character> characters;
+  final CharactersResponseModel characters;
 
   SuccessfulMainPageState(this.characters);
 

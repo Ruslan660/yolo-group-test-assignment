@@ -1,21 +1,18 @@
+import 'package:casino_test/src/data/models/character.dart';
 import 'package:casino_test/src/data/repository/characters_repository.dart';
 import 'package:casino_test/src/presentation/bloc/main_event.dart';
 import 'package:casino_test/src/presentation/bloc/main_state.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class MainPageBloc
-    extends Bloc<MainPageEvent, MainPageState> {
-  final CharactersRepository _charactersRepository;
+class MainPageBloc extends Bloc<MainPageEvent, MainPageState> {
+  final CharactersRepository charactersRepository;
 
-  MainPageBloc(
-    MainPageState initialState,
-    this._charactersRepository,
-  ) : super(initialState) {
+  MainPageBloc({
+    required this.charactersRepository,
+  }) : super(LoadingMainPageState()) {
     on<GetTestDataOnMainPageEvent>(
-      (event, emitter) => _getDataOnMainPageCasino(event, emitter),
-    );
-    on<DataLoadedOnMainPageEvent>(
-      (event, emitter) => _dataLoadedOnMainPageCasino(event, emitter),
+      (event, emitter) async => await _getDataOnMainPageCasino(event, emitter),
     );
     on<LoadingDataOnMainPageEvent>(
       (event, emitter) => emitter(LoadingMainPageState()),
@@ -23,11 +20,11 @@ class MainPageBloc
   }
 
   Future<void> _dataLoadedOnMainPageCasino(
-    DataLoadedOnMainPageEvent event,
     Emitter<MainPageState> emit,
+    CharactersResponseModel? data,
   ) async {
-    if (event.characters == null) {
-      emit(SuccessfulMainPageState(event.characters!));
+    if (data != null) {
+      emit(SuccessfulMainPageState(data));
     } else {
       emit(UnSuccessfulMainPageState());
     }
@@ -37,10 +34,11 @@ class MainPageBloc
     GetTestDataOnMainPageEvent event,
     Emitter<MainPageState> emit,
   ) async {
-    _charactersRepository.getCharacters(event.page).then(
-      (value) {
-        add(DataLoadedOnMainPageEvent(value));
-      },
-    );
+    try {
+      final response = await charactersRepository.getCharacters(event.page);
+      _dataLoadedOnMainPageCasino(emit, response);
+    } catch (err) {
+      emit(UnSuccessfulMainPageState());
+    }
   }
 }
