@@ -2,7 +2,6 @@ import 'package:casino_test/src/data/models/character.dart';
 import 'package:casino_test/src/data/repository/characters_repository.dart';
 import 'package:casino_test/src/presentation/bloc/main_event.dart';
 import 'package:casino_test/src/presentation/bloc/main_state.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class MainPageBloc extends Bloc<MainPageEvent, MainPageState> {

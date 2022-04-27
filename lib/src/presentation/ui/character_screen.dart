@@ -103,19 +103,27 @@ class _CharactersScreenState extends State<CharactersScreen> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Flexible(child: Text(character.name ?? "Name")),
-              Image.network(
-                character.image ?? "",
-                width: 50,
-                height: 50,
-                errorBuilder: (BuildContext context, Object exception,
-                    StackTrace? stackTrace) {
-                  return Container(
-                    width: 50,
-                    height: 50,
-                    color: Colors.grey,
-                  );
-                },
+              Flexible(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 4),
+                  child: Text(character.name ?? "Name"),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 4),
+                child: Image.network(
+                  character.image ?? "",
+                  width: 50,
+                  height: 50,
+                  errorBuilder: (BuildContext context, Object exception,
+                      StackTrace? stackTrace) {
+                    return Container(
+                      width: 50,
+                      height: 50,
+                      color: Colors.grey,
+                    );
+                  },
+                ),
               ),
               _characterAttributeRow("Status", character.status),
               _characterAttributeRow("Species", character.species),
