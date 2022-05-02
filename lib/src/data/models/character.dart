@@ -10,8 +10,8 @@ class CharactersResponseModel {
   final List<Character>? characters;
 
   CharactersResponseModel({
-    required this.info,
-    required this.characters,
+    this.info,
+    this.characters,
   });
 
   factory CharactersResponseModel.fromJson(Map<String, dynamic> json) =>

@@ -21,6 +21,5 @@ class CharactersRepositoryImpl implements CharactersRepository {
     } catch (err) {
       rethrow;
     }
-
   }
 }

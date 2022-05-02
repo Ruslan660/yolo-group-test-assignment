@@ -3,6 +3,7 @@ import 'package:casino_test/src/di/main_di_module.dart';
 import 'package:casino_test/src/presentation/bloc/main_bloc.dart';
 import 'package:casino_test/src/presentation/bloc/main_event.dart';
 import 'package:casino_test/src/presentation/bloc/main_state.dart';
+import 'package:casino_test/src/presentation/styles/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
@@ -17,10 +18,10 @@ class CharactersScreen extends StatefulWidget {
 
 class _CharactersScreenState extends State<CharactersScreen> {
   final _mainPageBloc = di<MainPageBloc>();
-  int _pageKey = 2;
+  int _pageKey = 1;
 
   final PagingController<int, Character> _pagingController =
-      PagingController(firstPageKey: 2);
+      PagingController(firstPageKey: 1);
 
   @override
   void initState() {
@@ -39,11 +40,13 @@ class _CharactersScreenState extends State<CharactersScreen> {
         child: BlocConsumer<MainPageBloc, MainPageState>(
           listener: (context, state) {
             if (state is SuccessfulMainPageState) {
-              if(state.characters.info?.next != null) {
+              if (state.characters.info?.next != null) {
                 _pageKey += 1;
-                _pagingController.appendPage(state.characters.characters ?? [], _pageKey);
+                _pagingController.appendPage(
+                    state.characters.characters ?? [], _pageKey);
               } else {
-                _pagingController.appendLastPage(state.characters.characters ?? []);
+                _pagingController
+                    .appendLastPage(state.characters.characters ?? []);
               }
             }
           },
@@ -53,7 +56,11 @@ class _CharactersScreenState extends State<CharactersScreen> {
             } else if (state is SuccessfulMainPageState) {
               return _successfulWidget(context);
             } else {
-              return const Center(child: Text("error"));
+              return Center(
+                  child: Text(
+                "error",
+                style: CustomTextStyles.bodyMedium14,
+              ));
             }
           },
         ),
@@ -106,7 +113,8 @@ class _CharactersScreenState extends State<CharactersScreen> {
               Flexible(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 4),
-                  child: Text(character.name ?? "Name"),
+                  child: Text(character.name ?? "Name",
+                      style: CustomTextStyles.bodyMedium14),
                 ),
               ),
               Padding(
@@ -144,7 +152,11 @@ class _CharactersScreenState extends State<CharactersScreen> {
             padding: const EdgeInsets.symmetric(vertical: 4),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [Text("$attribute: ",), Expanded(child: Text(value)),],
+              children: [
+                Text("$attribute: ", style: CustomTextStyles.bodyMedium14),
+                Expanded(
+                    child: Text(value, style: CustomTextStyles.bodyMedium14)),
+              ],
             ),
           )
         : const SizedBox.shrink();

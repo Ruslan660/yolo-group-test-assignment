@@ -7,7 +7,6 @@ import 'package:http/http.dart';
 final di = GetIt.instance;
 
 class MainDIModule {
-
   void configure(GetIt getIt) {
     final httpClient = Client();
 
